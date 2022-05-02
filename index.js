@@ -90,7 +90,7 @@ async function ask(team) {
       }
       if (answers.addTeam !== "All done") {
         teamMember = answers.addTeam.toLowerCase();
-        ask(team);
+        return ask(team);
       } else {
         return team;
       }
@@ -113,3 +113,7 @@ async function init() {
 
 // Function call to initialize app
 init();
+
+process.on("uncaughtException", function (e) {
+  console.log(e);
+});
