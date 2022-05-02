@@ -1,9 +1,9 @@
 const inquirer = require("inquirer");
-const fs = require("fs");
 const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
+const createHtml = require("./src/htmlGenerator");
 
 let teamMember = "team manager";
 const questions = [
@@ -17,7 +17,7 @@ const questions = [
   },
   {
     type: "input",
-    name: "employeeId",
+    name: "id",
     message: "What's their employee ID?",
     default: "id123",
   },
@@ -57,17 +57,42 @@ async function ask(team) {
   return await inquirer
     .prompt(questions)
     .then((answers) => {
+      let teamClass;
+      if (teamMember === "team manager") {
+        teamClass = new Manager(
+          answers.name,
+          answers.id,
+          answers.email,
+          answers.ability
+        );
+      }
+      if (teamMember === "engineer") {
+        teamClass = new Engineer(
+          answers.name,
+          answers.id,
+          answers.email,
+          answers.ability
+        );
+      }
+      if (teamMember === "intern") {
+        teamClass = new Intern(
+          answers.name,
+          answers.id,
+          answers.email,
+          answers.ability
+        );
+      }
       if (team) {
-        team.push(answers);
+        team.push(teamClass);
       }
       if (!team) {
-        team = [answers];
+        team = [teamClass];
       }
       if (answers.addTeam !== "All done") {
         teamMember = answers.addTeam.toLowerCase();
         ask(team);
       } else {
-          return team;
+        return team;
       }
       // writeToFile("README.md", answers);
     })
@@ -84,9 +109,6 @@ async function init() {
   const team = await ask();
   console.log(team);
   createHtml(team);
-}
-function createHtml(){
-
 }
 
 // Function call to initialize app
