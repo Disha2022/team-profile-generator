@@ -53,17 +53,22 @@ const questions = [
   },
 ];
 
-function init() {
-  inquirer
+async function ask(team) {
+  return await inquirer
     .prompt(questions)
     .then((answers) => {
+      if (team) {
+        team.push(answers);
+      }
+      if (!team) {
+        team = [answers];
+      }
       if (answers.addTeam !== "All done") {
         teamMember = answers.addTeam.toLowerCase();
-        console.log(teamMember);
-        init();
+        ask(team);
+      } else {
+          return team;
       }
-      console.log(answers);
-
       // writeToFile("README.md", answers);
     })
     .catch((error) => {
@@ -73,6 +78,15 @@ function init() {
         // Something else went wrong
       }
     });
+}
+
+async function init() {
+  const team = await ask();
+  console.log(team);
+  createHtml(team);
+}
+function createHtml(){
+
 }
 
 // Function call to initialize app
