@@ -32,5 +32,5 @@ test("engineer has getGithub", () => {
     "fakeGithub"
   );
 
-  expect(engineer.getGithub()).toBe("fakeGithub");
+  expect(engineer.getGithub()).toBe("https://github.com/fakeGithub");
 });

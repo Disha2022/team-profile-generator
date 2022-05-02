@@ -2,7 +2,19 @@ const fs = require("fs");
 function createHtml(team) {
   let content = "";
   team.forEach((member) => {
-    content += "<div></div>";
+    content += `
+    <section>
+      <h2>${member.name}</h2>
+      <h3>${member.getRole()}</h3>
+      <div>ID: ${member.id}</div>
+      <div>Email: ${member.email}</div>
+    `;
+    if (member.getRole() === "Manager") {
+      content += `<div>Office number:${member.officeNumber}</div>`;
+    }
+    if (member.getRole() === "Engineer") {
+      content += `<div>Github:<a href="${member.getGithub()}">${member.github}</div>`;
+    }
   });
   const contentTemplate = `
   <!DOCTYPE html> 
@@ -15,6 +27,7 @@ function createHtml(team) {
   </head>
 
   <body>
+    <h1>My Team</h1>
     ${content}
   </body>
   </html>

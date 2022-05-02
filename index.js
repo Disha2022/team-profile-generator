@@ -36,7 +36,7 @@ const questions = [
         ability = "office number";
       }
       if (teamMember === "engineer") {
-        ability = "GitHub";
+        ability = "GitHub username";
       }
       if (teamMember === "intern") {
         ability = "school";
