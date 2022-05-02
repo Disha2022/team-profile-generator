@@ -1,5 +1,4 @@
 const inquirer = require("inquirer");
-const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
@@ -15,6 +14,7 @@ const questions = [
     name: "name",
     // function is needed so it can change
     message: () => `What's your ${teamMember}'s name?`,
+    // user can just hit enter for quick testing of the program
     default: "testManager",
   },
   {
@@ -84,6 +84,7 @@ async function ask(team) {
           answers.ability
         );
       }
+      // team could be empty array or filled with existing team member classes
       team.push(teamClass);
       if (answers.addTeam !== "All done") {
         // user selected to add either an intern or engineer
@@ -96,9 +97,11 @@ async function ask(team) {
     })
     .catch((error) => {
       if (error.isTtyError) {
-        // Prompt couldn't be rendered in the current environment
+        console.log("Prompt couldn't be rendered in the current environment");
+        console.log(error);
       } else {
-        // Something else went wrong
+        console.log("Something else went wrong");
+        console.log(error);
       }
     });
 }
@@ -112,5 +115,6 @@ async function init() {
 init();
 
 process.on("uncaughtException", function (e) {
+  console.log("uncaught error");
   console.log(e);
 });

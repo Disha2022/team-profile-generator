@@ -1,4 +1,5 @@
 const fs = require("fs");
+// takes an array of Employee classes and creates an index.html in the dist folder
 function createHtml(team) {
   let content = "";
   team.forEach((member) => {
@@ -13,12 +14,14 @@ function createHtml(team) {
       content += `<div>Office number: ${member.officeNumber}</div>`;
     }
     if (member.getRole() === "Engineer") {
-      content += `<div>Github: <a href="${member.getGithub()}">${member.github}</a></div>`;
+      content += `<div>Github: <a href="${member.getGithub()}">${
+        member.github
+      }</a></div>`;
     }
     if (member.getRole() === "Intern") {
       content += `<div>School: ${member.getSchool()}</div>`;
     }
-    content += "</section>"
+    content += "</section>";
   });
   const contentTemplate = `
   <!DOCTYPE html> 
@@ -37,7 +40,9 @@ function createHtml(team) {
   </body>
   </html>
   `;
-  fs.writeFile("dist/index.html", contentTemplate, () => {});
+  fs.writeFile("dist/index.html", contentTemplate, (error) => {
+    console.log(error);
+  });
 }
 
 module.exports = createHtml;
