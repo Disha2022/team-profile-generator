@@ -10,11 +10,15 @@ function createHtml(team) {
       <div>Email: ${member.email}</div>
     `;
     if (member.getRole() === "Manager") {
-      content += `<div>Office number:${member.officeNumber}</div>`;
+      content += `<div>Office number: ${member.officeNumber}</div>`;
     }
     if (member.getRole() === "Engineer") {
-      content += `<div>Github:<a href="${member.getGithub()}">${member.github}</div>`;
+      content += `<div>Github: <a href="${member.getGithub()}">${member.github}</a></div>`;
     }
+    if (member.getRole() === "Intern") {
+      content += `<div>School: ${member.getSchool()}</div>`;
+    }
+    content += "</section>"
   });
   const contentTemplate = `
   <!DOCTYPE html> 
@@ -23,6 +27,7 @@ function createHtml(team) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./style.css">
     <title>Team Profile</title>
   </head>
 

@@ -5,6 +5,7 @@ const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const createHtml = require("./src/htmlGenerator");
 
+// this later can change to engineer or intern
 let teamMember = "team manager";
 const questions = [
   {
@@ -12,6 +13,7 @@ const questions = [
     type: "input",
     // this name becomes variable to grab user's input later
     name: "name",
+    // function is needed so it can change
     message: () => `What's your ${teamMember}'s name?`,
     default: "testManager",
   },
@@ -52,7 +54,7 @@ const questions = [
     choices: ["Engineer", "Intern", "All done"],
   },
 ];
-
+// this recursive function prompts user until they select All done
 async function ask(team) {
   return await inquirer
     .prompt(questions)
@@ -82,19 +84,15 @@ async function ask(team) {
           answers.ability
         );
       }
-      if (team) {
-        team.push(teamClass);
-      }
-      if (!team) {
-        team = [teamClass];
-      }
+      team.push(teamClass);
       if (answers.addTeam !== "All done") {
+        // user selected to add either an intern or engineer
         teamMember = answers.addTeam.toLowerCase();
+        // ask user the questions again
         return ask(team);
-      } else {
-        return team;
       }
-      // writeToFile("README.md", answers);
+      // if this is reached, then user selected All done
+      return team;
     })
     .catch((error) => {
       if (error.isTtyError) {
@@ -106,8 +104,7 @@ async function ask(team) {
 }
 
 async function init() {
-  const team = await ask();
-  console.log(team);
+  const team = await ask([]);
   createHtml(team);
 }
 
