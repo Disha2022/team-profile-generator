@@ -26,6 +26,8 @@ npm install
 
 node index.js
 
+## Demo
+
 ## Contributing Guidelines
 
 [Contributor Covenant](https://www.contributor-covenant.org/)
